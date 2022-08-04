@@ -64,6 +64,8 @@ for i in range(len(keyword_list)):
     print(i+1, end='')
     print('.', keyword_list[i])
 
+    print('  <포커스클릭>')
+
     # 광고물(AD) 접근 함수
     result = None
     while result is None:

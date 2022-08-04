@@ -87,8 +87,7 @@ for i in range(len(keyword_list)):
             driver.refresh()
             continue
 
-    print('  <NOMAL>')
-
+    print('  <일반상품>')
     # 일반 상품 출력
     for j in range(len(Normal_products)):
         result = None
@@ -104,11 +103,30 @@ for i in range(len(keyword_list)):
                 result = Normal_product_name
             except:
                 continue
+
+        # 출력 가공
+        if Normal_company[-2::] == '정보':
+            Normal_company = Normal_company[0:-2]
+        else:
+            Normal_company = "<가격비교>"
+
+        if not Normal_company:
+            result = None
+            while result is None:
+                try:
+                    Normal_company = Normal_products[j].find_element(
+                        'css selector', 'a.basicList_mall__sbVax > img')
+                    Normal_company = Normal_company.get_attribute('alt')
+                    result = Normal_company
+                except:
+                    continue
+
+        # 출력
         print('   ', j+1, end='')
         print(')', Normal_company, '-', Normal_product_name)
 
     print()
-    print('  <AD>')
+    print('  <광고상품>')
 
     # 광고 상품 출력
     for j in range(len(Ad_products)):
@@ -125,6 +143,25 @@ for i in range(len(keyword_list)):
                 result = Ad_product_name
             except:
                 continue
+
+        # 출력 가공
+        if Ad_company[-2::] == '정보':
+            Ad_company = Ad_company[0:-2]
+        else:
+            Ad_company = "<가격비교>"
+
+        if not Ad_company:
+            result = None
+            while result is None:
+                try:
+                    Ad_company = Ad_products[j].find_element(
+                        'css selector', 'a.basicList_mall__sbVax > img')
+                    Ad_company = Ad_company.get_attribute('alt')
+                    result = Ad_company
+                except:
+                    continue
+
+        # 출력
         print('   ', j+1, end='')
         print(')', Ad_company, '-', Ad_product_name)
     print()
